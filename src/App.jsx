@@ -7,7 +7,10 @@ function App() {
   const [taskTitle, settasktitle] = useState('');
 
   const addTask = () => {
-    const newTas = [...tasks]
+    const newTas = [...tasks,{
+      title: taskTitle,
+      done: false
+    }]
     newTas.push(taskTitle)
     settasks(newTas)
     settasktitle('')
@@ -22,7 +25,7 @@ function App() {
         <button onClick={addTask} className="block bg-green-100 w-full p-2 text-green-700 uppercase font-bold cursor-pointer hover:bg-green-700 hover:text-white transition-all rounded">Add</button>
       </div>
       <div className="p-4 border m-4 border-slate-300 rounded">
-        {tasks.map( item => <TodoItem title ={item} />)}
+        {tasks.map( item => <TodoItem item ={item} />)}
       </div>
     </div>
   );
