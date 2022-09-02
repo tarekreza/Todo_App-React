@@ -1,5 +1,6 @@
 import { useState } from "react";
 import TodoItem from "./TodoItem";
+import { v4 as uuid} from "uuid";
 
 function App() { 
 
@@ -7,13 +8,21 @@ function App() {
   const [taskTitle, settasktitle] = useState('');
 
   const addTask = () => {
-    const newTas = [...tasks,{
+    // can't copy value
+    const newTask = [...tasks,{
+      id : uuid(),
       title: taskTitle,
       done: false
-    }]
-    newTas.push(taskTitle)
-    settasks(newTas)
+    }];
+    settasks(newTask)
+    // console.log(newTask)
     settasktitle('')
+  }
+  const removeItem = (id) => {
+    const newTask = [...tasks].filter((item) => {
+      return id !== item.id
+    });
+    settasks(newTask);
   }
   return (
     <div>
@@ -25,7 +34,7 @@ function App() {
         <button onClick={addTask} className="block bg-green-100 w-full p-2 text-green-700 uppercase font-bold cursor-pointer hover:bg-green-700 hover:text-white transition-all rounded">Add</button>
       </div>
       <div className="p-4 border m-4 border-slate-300 rounded">
-        {tasks.map( item => <TodoItem item ={item} />)}
+        {tasks.map( (item , i) => <TodoItem key={i} item ={item} itemRemover = {removeItem} />)}
       </div>
     </div>
   );
